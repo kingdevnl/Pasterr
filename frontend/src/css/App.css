@@ -1,0 +1,17 @@
+body {
+    background: #28293D;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+@font-face {
+    font-family: "ubuntu";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/Ubuntu-Regular.ttf") format("truetype");
+}
+
+.m-app {
+    font-family: "ubuntu", sans-serif;
+    margin: 0;
+}

@@ -1,0 +1,7 @@
+.idea/
+.env
+pasterr
+pasterr.exe
+
+frontend/node_modules
+frontend/dist

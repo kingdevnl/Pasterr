@@ -1,0 +1,29 @@
+.navbar {
+    background-color: #222333;
+    width: 100%;
+    height: 60px;
+}
+
+
+.nav-logo {
+    color: #2EAC68;
+    text-decoration: none;
+    font-size: 40px;
+
+}
+
+.nav-right {
+    float: right;
+    margin-right: 40px;
+}
+
+.nav-link {
+    margin: 10px;
+}
+.nav-icon {
+    transition: transform 0.5s;
+}
+.nav-icon:hover {
+    transform: scale(1.2);
+}
+
