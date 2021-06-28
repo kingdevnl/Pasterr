@@ -1,4 +1,5 @@
 const path = require("path")
+const webpack = require('webpack');
 
 module.exports = {
     entry: ['react-hot-loader/patch', './src'],
@@ -10,9 +11,11 @@ module.exports = {
 
     devServer: {
         contentBase: path.join(__dirname, '/dist'),
-
         port: 3001,
-        watchContentBase: true
+        watchContentBase: true,
+        historyApiFallback: true,
+        filename: "index.html"
+
     },
 
     module: {
@@ -40,6 +43,12 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js', '.jsx'],
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(process.env.IS_PROD),
+            API_URL: process.env.IS_PROD === "true" ? "'/api'" : "'http://localhost:3000/api'"
+        })
+    ]
 
 }

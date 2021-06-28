@@ -20,9 +20,11 @@
 .nav-link {
     margin: 10px;
 }
+
 .nav-icon {
     transition: transform 0.5s;
 }
+
 .nav-icon:hover {
     transform: scale(1.2);
 }

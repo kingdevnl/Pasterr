@@ -1,35 +1,46 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from 'react-router-dom'
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Editor from '@monaco-editor/react';
+import { themeData } from '../editor.theme';
 
 export function Paste() {
-    const [data, setData] = useState(null)
-    const params = useParams()
-    const id = params.id
+
+    const params = useParams();
+    const id = params.id;
+    const [data, setData] = useState('')
+
 
 
     useEffect(() => {
-        setTimeout(()=> {
-            axios.get(`/api/paste/${id}`)
-                .then(value => {
-                    console.log(value.data.data)
-                    setData(value.data.data)
-                }).catch(reason => {
-                console.error(reason)
-            })
-        }, 100)
-
+        console.log('fetching data.');
+        axios.get(API_URL + `/paste/${id}`)
+            .then(value => {
+                setData(value.data.data.content);
+            }).catch(reason => {
+            setData('ERROR');
+        });
     }, [])
 
-    if (data == null) {
-        return <h1>Loading..</h1>
+    function handleEditorDidMount(editor, monaco) {
+
+        monaco.editor.defineTheme('dark', themeData);
+        monaco.editor.setTheme('dark');
+        console.log('Editor loaded');
     }
 
+
+
     return (
-        <div>
-            <pre>
-                {data.content}
-            </pre>
+        <div style={{ height: '100%', marginTop: 0 }}>
+            <Editor
+                height={'94vh'}
+                defaultValue={""}
+                value={data}
+                onMount={handleEditorDidMount}
+                language={'javascript'}
+                options={{    readOnly: true }}
+            />
         </div>
-    )
+    );
 }

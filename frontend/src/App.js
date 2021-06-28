@@ -1,30 +1,33 @@
-import {hot} from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader/root';
 
-import React from "react";
-import Header from "./components/Header";
+import React from 'react';
+import Header from './components/Header';
 
-import "./css/App.css"
-import {BrowserRouter, Switch, Route} from "react-router-dom";
-import {Paste} from "./pages/Paste";
-import {Home} from "./pages/Home";
+import './css/App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Paste } from './pages/Paste';
+import { Home } from './pages/Home';
 
 function App() {
 
 
     return (
         <BrowserRouter>
-            <Header/>
+            <Header />
 
             <Switch>
-                <Route path="/paste/:id">
-                    <Paste/>
+                <Route path='/:id'>
+                    <Paste />
                 </Route>
-                <Route path="/">
-                    <Home/>
+
+
+                <Route path='/'>
+                    <Home />
                 </Route>
+
             </Switch>
         </BrowserRouter>
-    )
+    );
 
     // return (
     //     <div className={"m-app"}>

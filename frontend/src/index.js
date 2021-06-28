@@ -1,7 +1,15 @@
-require("file-loader?name=[name].[ext]!./index.html")
-import React from "react";
-import ReactDOM from "react-dom"
+require('file-loader?name=[name].[ext]!./index.html');
+import { setConfig } from 'react-hot-loader';
 
-import App from "./App";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-ReactDOM.render(<App/>, document.getElementById("app"))
+import App from './App';
+
+setConfig({ reloadHooks: false });
+
+
+ReactDOM.render(<App />, document.getElementById('app'));
+
+
+console.log(PRODUCTION);
