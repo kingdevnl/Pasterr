@@ -11,5 +11,3 @@ setConfig({ reloadHooks: false });
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
-
-console.log(PRODUCTION);

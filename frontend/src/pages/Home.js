@@ -3,6 +3,7 @@ import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { theme } from '../editor.theme';
+import { Spinner } from '../components/Spinner';
 
 export function Home() {
 
@@ -22,8 +23,6 @@ export function Home() {
 
     function handleEditorWillMount(monaco) {
         monaco.editor.defineTheme('monokai', theme);
-
-
     }
 
     function handleEditorDidMount(editor, monaco) {
@@ -44,7 +43,6 @@ export function Home() {
     }
 
     const handleEditorChange = (value, event) => {
-        console.log('change: ' + value);
         setSource(value);
     };
     const save = (source) => {
@@ -58,7 +56,8 @@ export function Home() {
     };
 
     return (
-        <div style={{ height: '100%', marginTop: 0 }}>
+        <div style={{ height: '100%', marginTop: 0 }}>\
+
             <Editor
                 height={'94vh'}
                 defaultValue={source}
@@ -66,8 +65,8 @@ export function Home() {
                 beforeMount={handleEditorWillMount}
                 onMount={handleEditorDidMount}
                 onChange={handleEditorChange}
-
                 language={'javascript'}
+                loading={<Spinner />}
             />
         </div>
 

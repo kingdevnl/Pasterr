@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Editor from '@monaco-editor/react';
 import { theme } from '../editor.theme';
+import { Spinner } from '../components/Spinner';
 
 export function Paste() {
 
     const params = useParams();
     const id = params.id;
-    const [data, setData] = useState('')
-
+    const [data, setData] = useState('');
 
 
     useEffect(() => {
@@ -20,26 +20,24 @@ export function Paste() {
             }).catch(reason => {
             setData('ERROR');
         });
-    }, [])
+    }, []);
 
-    function handleEditorDidMount(editor, monaco) {
-
+    function handleEditorWillMount(monaco) {
         monaco.editor.defineTheme('monokai', theme);
-        monaco.editor.setTheme('monokai');
-
     }
-
 
 
     return (
         <div style={{ height: '100%', marginTop: 0 }}>
             <Editor
                 height={'94vh'}
-                defaultValue={""}
                 value={data}
-                onMount={handleEditorDidMount}
+                theme={'monokai'}
+                beforeMount={handleEditorWillMount}
                 language={'javascript'}
-                options={{    readOnly: true }}
+                options={{ readOnly: true }}
+                loading={<Spinner />}
+
             />
         </div>
     );
