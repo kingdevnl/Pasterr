@@ -4,12 +4,15 @@ import axios from 'axios';
 import Editor from '@monaco-editor/react';
 import { theme } from '../editor.theme';
 import { Spinner } from '../components/Spinner';
+import { useRecoilState } from 'recoil';
+import { settingsAtom } from '../atoms';
 
 export function Paste() {
 
     const params = useParams();
     const id = params.id;
     const [data, setData] = useState('');
+    const [settings, setSettings] = useRecoilState(settingsAtom)
 
 
     useEffect(() => {
@@ -34,7 +37,7 @@ export function Paste() {
                 value={data}
                 theme={'monokai'}
                 beforeMount={handleEditorWillMount}
-                language={'javascript'}
+                language={settings.language}
                 options={{ readOnly: true }}
                 loading={<Spinner />}
 
