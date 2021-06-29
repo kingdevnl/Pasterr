@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Editor from '@monaco-editor/react';
-import { themeData } from '../editor.theme';
+import { theme } from '../editor.theme';
 
 export function Paste() {
 
@@ -24,9 +24,9 @@ export function Paste() {
 
     function handleEditorDidMount(editor, monaco) {
 
-        monaco.editor.defineTheme('dark', themeData);
-        monaco.editor.setTheme('dark');
-        console.log('Editor loaded');
+        monaco.editor.defineTheme('monokai', theme);
+        monaco.editor.setTheme('monokai');
+
     }
 
 

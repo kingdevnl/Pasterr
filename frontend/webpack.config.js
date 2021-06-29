@@ -1,12 +1,12 @@
-const path = require("path")
+const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
     entry: ['react-hot-loader/patch', './src'],
 
     output: {
-        path: path.join(__dirname, "/dist"),
-        filename: "bundle.js"
+        path: path.join(__dirname, '/dist'),
+        filename: 'bundle.js',
     },
 
     devServer: {
@@ -14,7 +14,7 @@ module.exports = {
         port: 3001,
         watchContentBase: true,
         historyApiFallback: true,
-        filename: "index.html"
+        filename: 'index.html',
 
     },
 
@@ -24,8 +24,8 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
-                }
+                    loader: 'babel-loader',
+                },
             },
             {
                 test: /\.css$/,
@@ -33,13 +33,13 @@ module.exports = {
             },
             {
                 test: /\.ttf$/,
-                use: ["file-loader"],
+                use: ['file-loader'],
             },
             {
                 test: /\.svg$/,
-                use: "svg-url-loader"
-            }
-        ]
+                use: 'svg-url-loader',
+            },
+        ],
     },
     resolve: {
         extensions: ['', '.js', '.jsx'],
@@ -47,8 +47,8 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             PRODUCTION: JSON.stringify(process.env.IS_PROD),
-            API_URL: process.env.IS_PROD === "true" ? "'/api'" : "'http://localhost:3000/api'"
-        })
-    ]
+            API_URL: process.env.IS_PROD === 'true' ? '\'/api\'' : '\'http://localhost:3000/api\'',
+        }),
+    ],
 
-}
+};

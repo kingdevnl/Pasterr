@@ -1,37 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { themeData } from '../editor.theme';
 import axios from 'axios';
-import {useHistory} from "react-router-dom"
+import { useHistory } from 'react-router-dom';
+import { theme } from '../editor.theme';
+
 export function Home() {
 
-
+    const monacoRef = useRef(null);
+    const editorRef = useRef(null);
+    const [source, setSource] = useState('');
 
     useEffect(() => {
-        document.getElementById("app").addEventListener("savePaste", evt => {
-            save()
-        })
+        //TODO: Find a better way then this for the save button in the navbar.
+        document.getElementById('app').addEventListener('savePaste', evt => {
+            save(editorRef.current.getValue());
+        });
+    }, []);
 
-    }, [])
 
-    const [code, setCode] = useState('');
+    const history = useHistory();
 
-    const history = useHistory()
+    function handleEditorWillMount(monaco) {
+        monaco.editor.defineTheme('monokai', theme);
+
+
+    }
 
     function handleEditorDidMount(editor, monaco) {
+        monacoRef.current = monaco;
+        editorRef.current = editor;
 
-        monaco.editor.defineTheme('dark', themeData);
-        monaco.editor.setTheme('dark');
+        editor.addCommand([monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S], function() {
+            save(editorRef.current.getValue());
+        });
+
+        editor.addAction({
+            id: 'save',
+            label: 'Save',
+            run(editor, ...args) {
+                save(editorRef.current.getValue());
+            },
+        });
     }
 
     const handleEditorChange = (value, event) => {
-        setCode(value);
+        console.log('change: ' + value);
+        setSource(value);
     };
-    const save = () => {
+    const save = (source) => {
         axios.post(API_URL + '/paste/create', {
-            content: code,
+            content: source,
         }).then(value => {
-            history.push("/"+value.data.ID)
+            history.push('/' + value.data.ID);
         }).catch(reason => {
             console.error(reason);
         });
@@ -41,9 +61,12 @@ export function Home() {
         <div style={{ height: '100%', marginTop: 0 }}>
             <Editor
                 height={'94vh'}
-                defaultValue={code}
-                onChange={handleEditorChange}
+                defaultValue={source}
+                theme={'monokai'}
+                beforeMount={handleEditorWillMount}
                 onMount={handleEditorDidMount}
+                onChange={handleEditorChange}
+
                 language={'javascript'}
             />
         </div>
