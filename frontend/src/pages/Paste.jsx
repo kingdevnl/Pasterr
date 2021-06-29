@@ -20,6 +20,10 @@ export function Paste() {
         axios.get(API_URL + `/paste/${id}`)
             .then(value => {
                 setData(value.data.data.content);
+                setSettings({
+                    ...settings,
+                    language: value.data.data.language
+                })
             }).catch(reason => {
             setData('ERROR');
         });

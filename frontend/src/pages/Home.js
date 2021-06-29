@@ -56,11 +56,14 @@ export function Home() {
         setSource(value);
     };
     const save = (source) => {
+        console.log(`Saving paste with lang ${localStorage.getItem("language")}`);
         if (source.length < 5000 && source !== '') {
             return axios.post(API_URL + '/paste/create', {
                 content: source,
+                language: localStorage.getItem("language")
             }).then(value => {
                 history.push('/' + value.data.ID);
+                localStorage.removeItem('language')
             }).catch(reason => {
                 console.error(reason);
             });

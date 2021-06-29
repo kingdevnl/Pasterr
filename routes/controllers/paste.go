@@ -32,7 +32,9 @@ func (c PasteController) createPaste(ctx *fiber.Ctx) error {
 	paste := models.Paste{
 		ID:      strings.Split(uuid.NewV4().String(), "-")[0],
 		Content: input.Content,
+		Language: input.Language,
 	}
+
 	db.DB.Create(&paste)
 	return ctx.Status(fiber.StatusCreated).JSON(&paste)
 }

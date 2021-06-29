@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import '../css/Search.css';
 import '../css/Header.css';
@@ -11,6 +11,11 @@ import { settingsAtom } from '../atoms';
 export default function Header() {
     const [settings, setSettings] = useRecoilState(settingsAtom)
 
+
+    useEffect(() => {
+        localStorage.removeItem('language')
+    }, [])
+
     function savePaste() {
         let event = new Event('savePaste', { save: true }); // (2)
         document.getElementById('app').dispatchEvent(event);
@@ -21,13 +26,13 @@ export default function Header() {
             ...settings,
             language: val
         })
+
+        localStorage.setItem('language', val)
+
     }
 
 
-    const options = [
-        // {name: 'java', value: 'sv'},
-        // {name: 'English', value: 'en'},
-    ];
+    const options = [];
 
     languages.forEach(function(value, index) {
         options.push({
@@ -50,10 +55,11 @@ export default function Header() {
                         filterOptions={fuzzySearch}
                         emptyMessage='Not found'
                         onChange={onLanguageChange}
+                        value={{name: settings.language, value: settings.language}}
                     />
 
 
-                    <a href={'#'}><i className='fas fa-plus-square fa-fw icon' /></a>
+                    <a href={'/'}><i className='fas fa-plus-square fa-fw icon' /></a>
                     <a href={'#'}><i className='fas fa-save fa-fw icon' /></a>
 
                 </div>
