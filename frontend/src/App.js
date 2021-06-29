@@ -7,26 +7,29 @@ import './css/App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Paste } from './pages/Paste';
 import { Home } from './pages/Home';
+import { RecoilRoot } from 'recoil';
 
 function App() {
 
 
     return (
-        <BrowserRouter>
-            <Header />
+        <RecoilRoot>
+            <BrowserRouter>
+                <Header />
 
-            <Switch>
-                <Route path='/:id'>
-                    <Paste />
-                </Route>
+                <Switch>
+                    <Route path='/:id'>
+                        <Paste />
+                    </Route>
 
 
-                <Route path='/'>
-                    <Home />
-                </Route>
+                    <Route path='/'>
+                        <Home />
+                    </Route>
 
-            </Switch>
-        </BrowserRouter>
+                </Switch>
+            </BrowserRouter>
+        </RecoilRoot>
     );
 
     // return (

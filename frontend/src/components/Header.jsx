@@ -1,28 +1,65 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+import '../css/Search.css';
 import '../css/Header.css';
-import plus from '../images/plus.svg';
-import save from '../images/save.svg';
+
+import SelectSearch, { fuzzySearch } from 'react-select-search';
+import { languages } from '../languages';
+import { useRecoilState } from 'recoil';
+import { settingsAtom } from '../atoms';
 
 export default function Header() {
+    const [settings, setSettings] = useRecoilState(settingsAtom)
 
     function savePaste() {
         let event = new Event('savePaste', { save: true }); // (2)
         document.getElementById('app').dispatchEvent(event);
     }
 
+    function onLanguageChange(val) {
+        setSettings({
+            ...settings,
+            language: val
+        })
+    }
+
+
+    const options = [
+        // {name: 'java', value: 'sv'},
+        // {name: 'English', value: 'en'},
+    ];
+
+    languages.forEach(function(value, index) {
+        options.push({
+            name: value,
+            value: value,
+        });
+    });
+
     return (
-        <nav className={'navbar'}>
-            <Link className={'nav-logo'} to={'/'}>{'{PASTTERR}'}</Link>
-            <div className={'nav-right'}>
-                <div style={{ marginBottom: 0,  marginTop: 15  }}>
-                        <a href={'/'} className={'nav-link'}><img className={'nav-icon'} src={plus} alt='' /></a>
-                        <Link to={'#'} className={'nav-link'}><img onClick={savePaste} className={'nav-icon'} src={save} alt='' /></Link>
+        <div>
+
+            <nav className={'navbar'}>
+                <div className={'left'}>
+                    <div className={'logo'}>{'{PASTTERR}'}</div>
+                </div>
+                <div className={'right'}>
+                    <SelectSearch
+                        options={options}
+                        search
+                        filterOptions={fuzzySearch}
+                        emptyMessage='Not found'
+                        onChange={onLanguageChange}
+                    />
+
+
+                    <a href={'#'}><i className='fas fa-plus-square fa-fw icon' /></a>
+                    <a href={'#'}><i className='fas fa-save fa-fw icon' /></a>
 
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
+
 
     );
 }

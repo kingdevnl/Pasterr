@@ -1,33 +1,39 @@
 .navbar {
-    background-color: #222333;
-    width: 100%;
-    height: 60px;
+    background-color: #001C34;
+    padding: 12px;
 }
 
-.nav-logo {
+.navbar .logo {
     color: #2EAC68;
-    text-decoration: none;
-    font-size: 40px;
+    font-size: 30px;
     font-family: "ubuntu", sans-serif;
-    position: absolute;
-    margin-top: 1vh;
-    margin-left: 1ch;
 }
 
-.nav-right {
+.navbar .icon {
+    color: #2EAC68;
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.left {
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.right {
     float: right;
-    margin-right: 40px;
+    margin-right: 15px;
+    display: inline-block;
 }
 
-.nav-link {
-    margin: 10px;
+.navbar .select-search {
+    display: inline-block;
 }
 
-.nav-icon {
-    transition: transform 0.5s;
+.navbar input {
+    height: 26.25px;
 }
 
-.nav-icon:hover {
-    transform: scale(1.2);
+.navbar ul {
+    padding-inline-start: 0 !important;
 }
-

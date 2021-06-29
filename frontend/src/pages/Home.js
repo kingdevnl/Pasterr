@@ -4,12 +4,17 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { theme } from '../editor.theme';
 import { Spinner } from '../components/Spinner';
+import { useRecoilState } from 'recoil';
+import { settingsAtom } from '../atoms';
 
 export function Home() {
 
     const monacoRef = useRef(null);
     const editorRef = useRef(null);
     const [source, setSource] = useState('');
+
+    const [settings, setSettings] = useRecoilState(settingsAtom)
+
 
     useEffect(() => {
         //TODO: Find a better way then this for the save button in the navbar.
@@ -73,7 +78,7 @@ export function Home() {
                 beforeMount={handleEditorWillMount}
                 onMount={handleEditorDidMount}
                 onChange={handleEditorChange}
-                language={'javascript'}
+                language={settings.language}
                 loading={<Spinner />}
             />
         </div>
