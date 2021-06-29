@@ -16,13 +16,11 @@ export default function Header() {
         <nav className={'navbar'}>
             <Link className={'nav-logo'} to={'/'}>{'{PASTTERR}'}</Link>
             <div className={'nav-right'}>
-                <ul style={{ marginBottom: 0 }}>
-                    <li style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                        <Link to={'/'} className={'nav-link'}><img className={'nav-icon'} src={plus} alt='' /></Link>
-                        <Link to={'#'} className={'nav-link'}><img onClick={savePaste} className={'nav-icon'} src={save}
-                                                                   alt='' /></Link>
-                    </li>
-                </ul>
+                <div style={{ marginBottom: 0,  marginTop: 15  }}>
+                        <a href={'/'} className={'nav-link'}><img className={'nav-icon'} src={plus} alt='' /></a>
+                        <Link to={'#'} className={'nav-link'}><img onClick={savePaste} className={'nav-icon'} src={save} alt='' /></Link>
+
+                </div>
             </div>
         </nav>
 

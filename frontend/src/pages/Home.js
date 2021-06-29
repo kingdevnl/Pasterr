@@ -13,9 +13,14 @@ export function Home() {
 
     useEffect(() => {
         //TODO: Find a better way then this for the save button in the navbar.
-        document.getElementById('app').addEventListener('savePaste', evt => {
-            save(editorRef.current.getValue());
-        });
+        if (!document.getElementById('app').hasAttribute("hasPasteListener")) {
+            document.getElementById('app').addEventListener('savePaste', evt => {
+                console.log('xxxx');
+                save(editorRef.current.getValue());
+            });
+
+            document.getElementById("app").setAttribute("hasPasteListener", true.toString())
+        }
     }, []);
 
 
@@ -46,17 +51,20 @@ export function Home() {
         setSource(value);
     };
     const save = (source) => {
-        axios.post(API_URL + '/paste/create', {
-            content: source,
-        }).then(value => {
-            history.push('/' + value.data.ID);
-        }).catch(reason => {
-            console.error(reason);
-        });
+        if (source.length < 5000 && source !== '') {
+            return axios.post(API_URL + '/paste/create', {
+                content: source,
+            }).then(value => {
+                history.push('/' + value.data.ID);
+            }).catch(reason => {
+                console.error(reason);
+            });
+        }
+        alert("No content, or content > 5000 characters.")
     };
 
     return (
-        <div style={{ height: '100%', marginTop: 0 }}>\
+        <div style={{ height: '100%', marginTop: 0 }}>
 
             <Editor
                 height={'94vh'}
