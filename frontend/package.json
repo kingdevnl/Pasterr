@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "cross-env IS_PROD=false webpack serve --mode=development --progress --hot",
-    "build:production": "cross-env IS_PROD=true webpack --mode-production --progress"
+    "build:production": "cross-env IS_PROD=true webpack --mode=production --progress"
 
   },
   "keywords": [],
