@@ -32,8 +32,7 @@ export function Home() {
             id: 'save',
             label: 'Save',
             run(editor, ...args) {
-                savePaste(editor.getValue(), language, history)
-
+                savePaste(editor.getValue(), editor.getModel()._languageIdentifier.language)
             },
         });
     }
