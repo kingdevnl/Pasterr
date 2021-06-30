@@ -1,34 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import '../css/Search.css';
 import '../css/Header.css';
 
 import SelectSearch, { fuzzySearch } from 'react-select-search';
 import { languages } from '../languages';
-import { useRecoilState } from 'recoil';
-import { settingsAtom } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { languageAtom, sourceAtom } from '../atoms';
+import { savePaste } from '../paste.utils';
 
 export default function Header() {
-    const [settings, setSettings] = useRecoilState(settingsAtom)
+    const [language, setLanguage] = useRecoilState(languageAtom);
+    const source = useRecoilValue(sourceAtom);
 
-
-    useEffect(() => {
-        localStorage.removeItem('language')
-    }, [])
-
-    function savePaste() {
-        let event = new Event('savePaste', { save: true }); // (2)
-        document.getElementById('app').dispatchEvent(event);
-    }
 
     function onLanguageChange(val) {
-        setSettings({
-            ...settings,
-            language: val
-        })
-
-        localStorage.setItem('language', val)
-
+        setLanguage(val);
     }
 
 
@@ -43,7 +30,6 @@ export default function Header() {
 
     return (
         <div>
-
             <nav className={'navbar'}>
                 <div className={'left'}>
                     <div className={'logo'}>{'{PASTTERR}'}</div>
@@ -55,12 +41,13 @@ export default function Header() {
                         filterOptions={fuzzySearch}
                         emptyMessage='Not found'
                         onChange={onLanguageChange}
-                        value={{name: settings.language, value: settings.language}}
+                        value={{ name: language, value: language }}
                     />
 
 
                     <a href={'/'}><i className='fas fa-plus-square fa-fw icon' /></a>
-                    <a href={'#'}><i className='fas fa-save fa-fw icon' /></a>
+                    <a href={'#'} onClick={_ => savePaste(source, language)}><i
+                        className='fas fa-save fa-fw icon' /></a>
 
                 </div>
             </nav>

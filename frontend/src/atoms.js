@@ -1,14 +1,13 @@
 import { atom } from 'recoil';
 
-export const showSettingsAtom = atom({
-    key: 'showSettings',
-    default: true
+
+
+export const sourceAtom = atom({
+    key: 'source',
+    default: '// Code here'
 })
 
-export const  settingsAtom = atom({
-    key: 'settings',
-    default: {
-        visibility: 'public',
-        language: 'TEXT'
-    }
+export const languageAtom = atom({
+    key: 'language',
+    default: 'TEXT'
 })
