@@ -30,8 +30,8 @@ func (c PasteController) createPaste(ctx *fiber.Ctx) error {
 		})
 	}
 	paste := models.Paste{
-		ID:      strings.Split(uuid.NewV4().String(), "-")[0],
-		Content: input.Content,
+		ID:       strings.Split(uuid.NewV4().String(), "-")[0],
+		Content:  input.Content,
 		Language: input.Language,
 	}
 
@@ -39,7 +39,7 @@ func (c PasteController) createPaste(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusCreated).JSON(&paste)
 }
 
-func (c PasteController) viewPaste(ctx *fiber.Ctx)  error {
+func (c PasteController) viewPaste(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
 	var paste models.Paste
@@ -56,9 +56,24 @@ func (c PasteController) viewPaste(ctx *fiber.Ctx)  error {
 		"data": paste,
 	})
 }
+func (c PasteController) viewPasteRaw(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	var paste models.Paste
+
+	err := db.DB.Where("id = ?", id).First(&paste).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return ctx.Status(fiber.StatusNotFound).SendString("Paste " + id + " Not found.")
+	}
+
+	return ctx.SendString(paste.Content)
+}
 
 func SetupPasteRoutes(app *fiber.App) {
 	controller := PasteController{}
 	app.Post("/api/paste/create", controller.createPaste)
 	app.Get("/api/paste/:id", controller.viewPaste)
+	app.Get("/:id/raw", controller.viewPasteRaw)
+
 }
